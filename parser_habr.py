@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 
 
 def parser(url):
+    if 'https://habr.com' not in url:
+        raise ValueError('It isn`t Habr')
+
     page = requests.get(url)
 
     # Checking for connection to site
@@ -17,15 +20,15 @@ def parser(url):
 
         # Removing invalid characters from file`s name
         head = head.translate({ord(i): None for i in "\\/:*?\'\"<>|+., "})
-        print(head)
 
-        # Creating file with page`s code
-        with open(f'{head}.txt', 'w', encoding='utf8') as file:
-            # find_all принимает список со всеми тегами которые он должен найти
-            for data in soup.find_all(['p', 'h2', 'ul']):
-                file.write(data.text + '\n')
+        data = soup.find_all('div', class_="tm-article-body")
+        text = ''.join([i.text.replace('\n', '') for i in data])
+        # Creating file with page`s text
+        # with open(f'{head}.txt', 'w', encoding='utf8') as file:
+        #     data = soup.find_all('div', class_="tm-article-body")
+        #     file.write(*[i.text.replace('\n', '') for i in data])
 
-        print('[+] 1/3 taking article from habr')
+        return text, head  # Return file name
 
     else:
-        return 'Can`t connect to site, check url'
+        return ''
