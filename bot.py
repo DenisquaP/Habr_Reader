@@ -23,16 +23,6 @@ def help_message(message):
     bot.send_message(message.chat.id, text)
 
 
-# @bot.message_handler(commands=['audio'])
-# def audio_message(message):
-#     markup = telebot.types.ForceReply(selective=False)
-#     text = 'Ответь на это сообщение ссылкой'
-#     bot.send_message(message.chat.id, text, reply_markup=markup)
-#     audio_name = audio_habr(message.text)
-#     audio = open(audio_name, 'rb')
-#     bot.send_message(message.chat.id, message.text)
-#     bot.send_audio(message.chat.id, audio)
-
 @bot.message_handler(regexp='((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)')
 def command_url(message):
     bot.send_message(message.chat.id, 'Озвучиваю...')
