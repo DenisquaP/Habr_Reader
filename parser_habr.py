@@ -15,7 +15,7 @@ def parser(url):
 
         soup = BeautifulSoup(html_code, "lxml")
 
-        # File`s name after saving
+        # File`s name
         head = soup.find('h1').text
 
         # Removing invalid characters from file`s name
@@ -23,10 +23,6 @@ def parser(url):
 
         data = soup.find_all('div', class_="tm-article-body")
         text = ''.join([i.text.replace('\n', '') for i in data])
-        # Creating file with page`s text
-        # with open(f'{head}.txt', 'w', encoding='utf8') as file:
-        #     data = soup.find_all('div', class_="tm-article-body")
-        #     file.write(*[i.text.replace('\n', '') for i in data])
 
         return text, head  # Return file name
 
