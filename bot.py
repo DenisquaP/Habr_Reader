@@ -3,9 +3,13 @@ from text_to_audio import audio_habr
 import os
 
 
-TOKEN = "5844533796:AAFAFdCyXb7-TWsziEsnMNlKYkxoCn3YX_Y"
+with open('token.txt', 'r') as tk:
+    TOKEN = tk.readline()
+    print(TOKEN)
 bot = telebot.TeleBot(TOKEN)
 
+
+# Menu
 bot.set_my_commands([
     telebot.types.BotCommand("/start", "Перезапуск бота"),
     telebot.types.BotCommand("/help", "Помощь"),
@@ -23,6 +27,7 @@ def help_message(message):
     bot.send_message(message.chat.id, text)
 
 
+# If message is url
 @bot.message_handler(regexp='((https?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)')
 def command_url(message):
     bot.send_message(message.chat.id, 'Озвучиваю...')
