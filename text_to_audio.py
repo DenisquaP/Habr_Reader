@@ -1,13 +1,10 @@
 from gtts import gTTS
 from parser_habr import parser
-# import os
 
 
 def audio_habr(url):
-    text = parser(url)
+    text = parser(url)  # [0] - text, [1] - filename
 
-    if text[0]:
-        speech = gTTS(text=text[0], lang='ru', slow=False)
-        speech.save(f'{text[1]}.mp3')
-        # os.system(f"start {text[1]}.mp3")
-        return f'{text[1]}.mp3'
+    speech = gTTS(text=text[0], lang='ru', slow=False)
+    speech.save(f'./app/{text[1]}.mp3')
+    return text[1]
